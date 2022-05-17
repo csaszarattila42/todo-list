@@ -12,4 +12,21 @@ class App extends Component {
   }
 }
 
+class ListContainer extends Component {
+  render() {
+    const listCompnents =  this.props.lists.map((list, listItemIndex) => {
+      return <TodoList 
+                title={list.title}
+                listItems={list.listItems}
+                key={listItemIndex}
+              />
+    });
+    return (
+      <div className='list-container'>
+        {listCompnents}
+      </div>
+    );
+  }
+}
+
 export default App;
