@@ -70,6 +70,10 @@ class ListItem extends Component {
   }
 }
 
-
+class NewListButton extends Component {
+  render() {
+    return <button type='button'>New List</button>
+  }
+}
 
 export default App;
