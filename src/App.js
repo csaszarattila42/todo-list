@@ -29,4 +29,29 @@ class ListContainer extends Component {
   }
 }
 
+class TodoList extends Component {
+  render() {
+    const sortedListItems = [...this.props.listItems].sort((itemA, itemB) => {
+      return itemA.priority === itemB.priority 
+        ? itemA.deadLine - itemB.deadLine
+        : itemA.priority - itemB.priority 
+    });
+    const listItemComponents = sortedListItems.map(listItem => {
+      return <ListItem
+               name={listItem.name}
+               done={listItem.done}
+               deadLine={listItem.deadLine}
+              />
+    });
+    return (
+      <>
+        <h4>{this.props.title}</h4>
+        <ul>
+          {listItemComponents}
+        </ul>
+      </>
+    );
+  }
+}
+
 export default App;
