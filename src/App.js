@@ -45,12 +45,12 @@ class TodoList extends Component {
               />
     });
     return (
-      <>
+      <div>
         <h4>{this.props.title}</h4>
         <ul>
           {listItemComponents}
         </ul>
-      </>
+      </div>
     );
   }
 }
@@ -60,7 +60,7 @@ class ListItem extends Component {
     return (
       <li>
         <label>
-          <input type='checkbox' checked={thid.props.done} />
+          <input type='checkbox' checked={this.props.done} />
           {this.props.name}
         </label>
         {new Intl.DateTimeFormat('hu').format(this.props.deadLine)}
@@ -69,5 +69,7 @@ class ListItem extends Component {
     );
   }
 }
+
+
 
 export default App;
