@@ -14,11 +14,11 @@ class App extends Component {
 
 class ListContainer extends Component {
   render() {
-    const listCompnents =  this.props.lists.map((list, listItemIndex) => {
+    const listCompnents =  this.props.lists.map((list, listIndex) => {
       return <TodoList 
                 title={list.title}
                 listItems={list.listItems}
-                key={listItemIndex}
+                key={listIndex}
               />
     });
     return (
@@ -36,11 +36,12 @@ class TodoList extends Component {
         ? itemA.deadLine - itemB.deadLine
         : itemA.priority - itemB.priority 
     });
-    const listItemComponents = sortedListItems.map(listItem => {
+    const listItemComponents = sortedListItems.map((listItem, listItemIndex) => {
       return <ListItem
                name={listItem.name}
                done={listItem.done}
                deadLine={listItem.deadLine}
+               key={listItemIndex}
               />
     });
     return (
@@ -50,6 +51,21 @@ class TodoList extends Component {
           {listItemComponents}
         </ul>
       </>
+    );
+  }
+}
+
+class ListItem extends Component {
+  render() {
+    return (
+      <li>
+        <label>
+          <input type='checkbox' checked={thid.props.done} />
+          {this.props.name}
+        </label>
+        {new Intl.DateTimeFormat('hu').format(this.props.deadLine)}
+        <button type='button'>Delete</button>
+      </li>
     );
   }
 }
