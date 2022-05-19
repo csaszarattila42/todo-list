@@ -2,17 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <button type='button'>New List</button>
-        <ListContainer lists={this.props.lists} />
-      </div>
-    );
-  }
-}
-
-class ListContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,13 +9,33 @@ class ListContainer extends Component {
     }
     this.clickHandler = this.clickHandler.bind(this);
   }
+
+  render() {
+    return (
+      <div className="App">
+        <button type='button'>New List</button>
+        <ListContainer lists={this.state.lists} clickHandler={this.clickHandler}/>
+      </div>
+    );
+  }
+  
+  clickHandler(listIndex) {
+    const modifiedLists = [...this.state.lists];
+    modifiedLists[listIndex].isShown = !modifiedLists[listIndex].isShown;
+    this.setState({
+      lists: modifiedLists
+    });
+  }
+}
+
+class ListContainer extends Component {
   render() {
     const listCompnents =  this.props.lists.map((list, listIndex) => {
       return <TodoList 
                 title={list.title}
                 listItems={list.listItems}
                 isShown={list.isShown}
-                clickHandler={() => this.clickHandler(listIndex)}
+                clickHandler={() => this.props.clickHandler(listIndex)}
                 key={listIndex}
               />
     });
@@ -35,14 +44,6 @@ class ListContainer extends Component {
         {listCompnents}
       </div>
     );
-  }
-
-  clickHandler(listIndex) {
-    const modifiedLists = [...this.state.lists];
-    modifiedLists[listIndex].isShown = !modifiedLists[listIndex].isShown;
-    this.setState({
-      lists: modifiedLists
-    });
   }
 }
 
