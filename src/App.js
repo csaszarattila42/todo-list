@@ -13,11 +13,20 @@ class App extends Component {
 }
 
 class ListContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      lists: this.props.lists.map(list => Object.assign(list, {isShown: false}))
+    }
+    this.clickHandler = this.clickHandler.bind(this);
+  }
   render() {
     const listCompnents =  this.props.lists.map((list, listIndex) => {
       return <TodoList 
                 title={list.title}
                 listItems={list.listItems}
+                isShown={list.isShown}
+                clickHandler={() => this.clickHandler(listIndex)}
                 key={listIndex}
               />
     });
@@ -27,28 +36,39 @@ class ListContainer extends Component {
       </div>
     );
   }
+
+  clickHandler(listIndex) {
+    const modifiedLists = [...this.state.lists];
+    modifiedLists[listIndex].isShown = !modifiedLists[listIndex].isShown;
+    this.setState({
+      lists: modifiedLists
+    });
+  }
 }
 
 class TodoList extends Component {
   render() {
-    const sortedListItems = [...this.props.listItems].sort((itemA, itemB) => {
-      return itemA.priority === itemB.priority 
-        ? itemA.deadLine - itemB.deadLine
-        : itemA.priority - itemB.priority 
-    });
-    const listItemComponents = sortedListItems.map((listItem, listItemIndex) => {
-      return <ListItem
-               name={listItem.name}
-               done={listItem.done}
-               deadLine={listItem.deadLine}
-               key={listItemIndex}
-              />
-    });
+    let listItemComponents;
+    if (this.props.isShown) {
+      const sortedListItems = [...this.props.listItems].sort((itemA, itemB) => {
+        return itemA.priority === itemB.priority 
+          ? itemA.deadLine - itemB.deadLine
+          : itemA.priority - itemB.priority 
+      });
+      listItemComponents = sortedListItems.map((listItem, listItemIndex) => {
+        return <ListItem
+                name={listItem.name}
+                done={listItem.done}
+                deadLine={listItem.deadLine}
+                key={listItemIndex}
+                />
+      });
+    }
     return (
       <div>
-        <h4>{this.props.title}</h4>
+        <h4 onClick={this.props.clickHandler}>{this.props.title}</h4>
         <ul>
-          {listItemComponents}
+          {this.props.isShown ? listItemComponents : null}
         </ul>
       </div>
     );
