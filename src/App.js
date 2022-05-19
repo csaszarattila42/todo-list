@@ -5,7 +5,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <NewListButton />
+        <button type='button'>New List</button>
         <ListContainer lists={this.props.lists} />
       </div>
     );
@@ -90,10 +90,5 @@ class ListItem extends Component {
   }
 }
 
-class NewListButton extends Component {
-  render() {
-    return <button type='button'>New List</button>
-  }
-}
 
 export default App;
