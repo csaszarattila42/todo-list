@@ -7,19 +7,19 @@ class App extends Component {
     this.state = {
       lists: this.props.lists.map(list => Object.assign(list, {isShown: false}))
     }
-    this.clickHandler = this.clickHandler.bind(this);
+    this.titleClickHandler = this.titleClickHandler.bind(this);
   }
 
   render() {
     return (
       <div className="App">
         <button type='button'>New List</button>
-        <ListContainer lists={this.state.lists} clickHandler={this.clickHandler}/>
+        <ListContainer lists={this.state.lists} clickHandler={this.titleClickHandler}/>
       </div>
     );
   }
   
-  clickHandler(listIndex) {
+  titleClickHandler(listIndex) {
     const modifiedLists = [...this.state.lists];
     modifiedLists[listIndex].isShown = !modifiedLists[listIndex].isShown;
     this.setState({
