@@ -1,20 +1,25 @@
-import React, { Component } from 'react';
+import React, { Component, Dialog } from 'react';
 import './App.css';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      lists: this.props.lists.map(list => Object.assign(list, {isShown: false}))
+      lists: this.props.lists.map(list => Object.assign(list, {isShown: false})),
+      showNewListItemModal: false
     }
     this.titleClickHandler = this.titleClickHandler.bind(this);
+    this.newListClickHandler = this.newListClickHandler.bind(this);
+    this.newListSaveClickHandler = this.newListSaveClickHandler.bind(this);
+    this.
   }
 
   render() {
     return (
       <div className="App">
-        <button type='button'>New List</button>
+        <button type='button' onClick={this.newListClickHandler}>New List</button>
         <ListContainer lists={this.state.lists} clickHandler={this.titleClickHandler}/>
+        <NewListModal open={this.state.showNewListItemModal} />
       </div>
     );
   }
@@ -25,6 +30,16 @@ class App extends Component {
     this.setState({
       lists: modifiedLists
     });
+  }
+
+  newListClickHandler() {
+    this.setState({
+      showNewListItemModal: true
+    });
+  }
+
+  newListSaveClickHandler() {
+
   }
 }
 
@@ -91,5 +106,8 @@ class ListItem extends Component {
   }
 }
 
+class NewListModal extends Dialog {
+
+}
 
 export default App;
